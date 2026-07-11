@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATS Uyumlu CV Oluşturucu & Portfolyo Editörü</title>
+  <!-- FontAwesome for UI Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-file-invoice"></i>
+      <span>ATS CV Geliştirici</span>
+      <span class="save-status" id="save-status"><i class="fas fa-check-circle"></i> Otomatik Kaydedildi</span>
+    </div>
+    
+    <div class="header-controls">
+      <!-- Import / Export Actions -->
+      <button class="btn btn-secondary" id="btn-load-demo" title="Mock verileri yükler">
+        <i class="fas fa-magic"></i> Demo Yükle
+      </button>
+      <button class="btn btn-secondary" id="btn-export" title="Verileri JSON olarak yedekle">
+        <i class="fas fa-file-download"></i> Veri Aktar
+      </button>
+      <button class="btn btn-secondary" id="btn-import" title="JSON yedekten verileri geri yükle">
+        <i class="fas fa-file-upload"></i> Veri Yükle
+      </button>
+      <input type="file" id="file-input" accept=".json" style="display: none;">
+
+      <!-- Theme Switcher -->
+      <button class="icon-btn" id="theme-toggle" title="Tema Değiştir">
+        <i class="fas fa-sun"></i>
+      </button>
+
+      <!-- Action Button -->
+      <button class="btn btn-primary" id="btn-download" title="Tarayıcı yazdırma aracını açarak PDF olarak kaydeder">
+        <i class="fas fa-print"></i> PDF İndir
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workstation Layout -->
+  <div class="main-container">
+    
+    <!-- LEFT PANEL: Dynamic Form Editor -->
+    <div class="editor-panel">
+      <!-- Editor Section Tabs -->
+      <div class="editor-tabs">
+        <button class="tab-btn active" data-section="sec-personal"><i class="fas fa-user"></i> Kişisel</button>
+        <button class="tab-btn" data-section="sec-summary"><i class="fas fa-align-left"></i> Özet</button>
+        <button class="tab-btn" data-section="sec-experience"><i class="fas fa-briefcase"></i> Deneyim</button>
+        <button class="tab-btn" data-section="sec-education"><i class="fas fa-graduation-cap"></i> Eğitim</button>
+        <button class="tab-btn" data-section="sec-portfolio"><i class="fas fa-folder-open"></i> Projeler</button>
+        <button class="tab-btn" data-section="sec-skills"><i class="fas fa-brain"></i> Yetenekler</button>
+        <button class="tab-btn" data-section="sec-languages"><i class="fas fa-language"></i> Diller</button>
+      </div>
+
+      <!-- Editor Forms Container -->
+      <div class="editor-content">
+        
+        <!-- SECTION 1: Personal Info -->
+        <div class="form-section active" id="sec-personal">
+          <div class="section-header">
+            <div>
+              <h2>Kişisel Bilgiler</h2>
+              <p>ATS tarafından taranacak iletişim ve profil bağlantıları.</p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inp-full-name">Ad Soyad</label>
+              <input type="text" id="inp-full-name" placeholder="Örn: Ahmet Yılmaz">
+            </div>
+            <div class="form-group">
+              <label for="inp-title">Unvan / Başlık</label>
+              <input type="text" id="inp-title" placeholder="Örn: Frontend Developer">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inp-email">E-Posta Adresi</label>
+              <input type="email" id="inp-email" placeholder="ahmet@domain.com">
+            </div>
+            <div class="form-group">
+              <label for="inp-phone">Telefon Numarası</label>
+              <input type="tel" id="inp-phone" placeholder="+90 555 555 55 55">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inp-location">Konum / Şehir</label>
+            <input type="text" id="inp-location" placeholder="Örn: İstanbul, Türkiye">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inp-website">Kişisel Web Sitesi</label>
+              <input type="url" id="inp-website" placeholder="https://ahmet.dev">
+            </div>
+            <div class="form-group">
+              <label for="inp-linkedin">LinkedIn Bağlantısı</label>
+              <input type="url" id="inp-linkedin" placeholder="https://linkedin.com/in/username">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inp-github">GitHub Bağlantısı</label>
+            <input type="url" id="inp-github" placeholder="https://github.com/username">
+          </div>
+        </div>
+
+        <!-- SECTION 2: Professional Summary -->
+        <div class="form-section" id="sec-summary">
+          <div class="section-header">
+            <div>
+              <h2>Profesyonel Özet</h2>
+              <p>Kendinizi ve kariyerinizi özetleyen kısa paragraf.</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inp-summary">Hakkımda / Özet</label>
+            <textarea id="inp-summary" placeholder="Kariyer hedeflerinizi ve güçlü teknik niteliklerinizi 3-4 cümlede özetleyin..."></textarea>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Experience -->
+        <div class="form-section" id="sec-experience">
+          <div class="section-header">
+            <div>
+              <h2>İş Deneyimi</h2>
+              <p>Kariyer geçmişinizi tersten kronolojik sırayla ekleyin.</p>
+            </div>
+            <button class="btn btn-success" id="btn-add-exp">
+              <i class="fas fa-plus"></i> Ekle
+            </button>
+          </div>
+          <div class="list-container" id="editor-exp-list">
+            <!-- Dynamic entries load here -->
+          </div>
+        </div>
+
+        <!-- SECTION 4: Education -->
+        <div class="form-section" id="sec-education">
+          <div class="section-header">
+            <div>
+              <h2>Eğitim Bilgileri</h2>
+              <p>Aldığınız akademik dereceleri ve sertifika programlarını listeleyin.</p>
+            </div>
+            <button class="btn btn-success" id="btn-add-edu">
+              <i class="fas fa-plus"></i> Ekle
+            </button>
+          </div>
+          <div class="list-container" id="editor-edu-list">
+            <!-- Dynamic entries load here -->
+          </div>
+        </div>
+
+        <!-- SECTION 5: Portfolio & Projects -->
+        <div class="form-section" id="sec-portfolio">
+          <div class="section-header">
+            <div>
+              <h2>Projeler & Portfolyo</h2>
+              <p>Geliştirdiğiniz projeleri ve portfolyo bağlantılarınızı ekleyin. Bağlantılar taranabilir olmalıdır.</p>
+            </div>
+            <button class="btn btn-success" id="btn-add-port">
+              <i class="fas fa-plus"></i> Ekle
+            </button>
+          </div>
+          <div class="list-container" id="editor-port-list">
+            <!-- Dynamic entries load here -->
+          </div>
+        </div>
+
+        <!-- SECTION 6: Skills -->
+        <div class="form-section" id="sec-skills">
+          <div class="section-header">
+            <div>
+              <h2>Yetenekler</h2>
+              <p>Yeteneklerinizi kategorize ederek ekleyin (Örn: Programlama Dilleri, Araçlar).</p>
+            </div>
+            <button class="btn btn-success" id="btn-add-skill">
+              <i class="fas fa-plus"></i> Ekle
+            </button>
+          </div>
+          <div class="list-container" id="editor-skills-list">
+            <!-- Dynamic entries load here -->
+          </div>
+        </div>
+
+        <!-- SECTION 7: Languages -->
+        <div class="form-section" id="sec-languages">
+          <div class="section-header">
+            <div>
+              <h2>Diller</h2>
+              <p>Bildiğiniz yabancı dilleri ve seviyelerini belirtin.</p>
+            </div>
+            <button class="btn btn-success" id="btn-add-lang">
+              <i class="fas fa-plus"></i> Ekle
+            </button>
+          </div>
+          <div class="list-container" id="editor-lang-list">
+            <!-- Dynamic entries load here -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: Live CV Preview -->
+    <div class="preview-panel">
+      <!-- Printable Page Paper -->
+      <div class="cv-paper template-modern" id="cv-paper">
+        <!-- Live CV output will render here -->
+      </div>
+
+      <!-- Preview Config Settings (Floating Box) -->
+      <div class="preview-settings">
+        <div class="preview-settings-title">Şablon Seçimi</div>
+        <div class="template-selectors">
+          <button class="template-btn active" data-template="modern">Modern</button>
+          <button class="template-btn" data-template="classic">Klasik ATS</button>
+          <button class="template-btn" data-template="executive">Executive</button>
+        </div>
+
+        <div class="preview-settings-title" style="margin-top: 0.5rem;">Renk Paleti</div>
+        <div class="color-selectors">
+          <!-- Deep Blue -->
+          <div class="color-dot active" data-color="#1e3a8a" style="background-color: #1e3a8a;" title="Kraliyet Mavisi"></div>
+          <!-- Forest Emerald -->
+          <div class="color-dot" data-color="#065f46" style="background-color: #065f46;" title="Zümrüt Yeşili"></div>
+          <!-- Regal Purple -->
+          <div class="color-dot" data-color="#6b21a8" style="background-color: #6b21a8;" title="Mor"></div>
+          <!-- Dark Slate -->
+          <div class="color-dot" data-color="#1e293b" style="background-color: #1e293b;" title="Koyu Gri / Siyah"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Custom Confirm Modal -->
+  <div class="modal-overlay" id="confirm-modal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Sistem Uyarısı</h3>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-modal-text">Mevcut verilerinizin üzerine demo veriler yüklenecektir. Bu işlem geri alınamaz.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="confirm-cancel-btn">Vazgeç</button>
+        <button class="btn btn-primary" id="confirm-ok-btn" style="background: var(--gradient-success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">Evet, Devam Et</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="mockData.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

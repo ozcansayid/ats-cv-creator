@@ -1,0 +1,6 @@
+# Temp files and zips
+cv-olusturucu.zip
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

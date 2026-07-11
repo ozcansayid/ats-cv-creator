@@ -1,0 +1,1016 @@
+/* ==========================================================================
+   Google Fonts
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap');
+
+/* ==========================================================================
+   Root Variables (Editor Design System & Themes)
+   ========================================================================== */
+:root {
+  /* Editor Theme Colors (Dark/Premium Sci-Fi by default) */
+  --bg-editor: #090d16;
+  --bg-sidebar: #0f1626;
+  --bg-card: #151f32;
+  --bg-input: #1b273f;
+  --border-color: #243555;
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-dark: #111827;
+  
+  /* Primary Accent & Gradients */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary: #10b981;
+  --accent: #f59e0b;
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  
+  /* Box Shadows & Border Radii */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  
+  /* Fonts */
+  --font-editor: 'Outfit', sans-serif;
+  
+  /* CV Preview Defaults (Modern Mode) */
+  --cv-font: 'Inter', sans-serif;
+  --cv-primary: #1e3a8a;
+  --cv-text: #374151;
+  --cv-text-light: #6b7280;
+  --cv-line: #e5e7eb;
+}
+
+/* Light Mode overrides for Editor */
+body.light-mode {
+  --bg-editor: #f4f6f9;
+  --bg-sidebar: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #f8fafc;
+  --border-color: #e2e8f0;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   General Reset & Layout
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-editor);
+  background-color: var(--bg-editor);
+  color: var(--text-main);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-sidebar);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ==========================================================================
+   Header / Navigation
+   ========================================================================== */
+header {
+  background-color: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo i {
+  -webkit-text-fill-color: initial;
+  color: #6366f1;
+}
+
+.save-status {
+  font-family: var(--font-editor);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 1.5rem;
+  padding: 0.25rem 0.6rem;
+  background-color: rgba(16, 185, 129, 0.1);
+  border-radius: var(--radius-sm);
+  transition: all 0.3s ease;
+  -webkit-text-fill-color: initial; /* Override logo text gradient */
+}
+
+.save-status.saving {
+  color: var(--accent);
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: var(--border-color);
+}
+
+.btn-success {
+  background: var(--gradient-success);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+.btn-success:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.icon-btn:hover {
+  background-color: var(--border-color);
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   Main Application Layout
+   ========================================================================== */
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Left Panel: Form Editor */
+.editor-panel {
+  width: 45%;
+  min-width: 480px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Editor Tabs Navigation */
+.editor-tabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(0, 0, 0, 0.1);
+  scrollbar-width: none; /* Firefox */
+}
+.editor-tabs::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.tab-btn {
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+.tab-btn:hover {
+  color: var(--text-main);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+/* Editor Form Content */
+.editor-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.form-section {
+  display: none;
+}
+.form-section.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-header p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   Form Styling Components
+   ========================================================================== */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="month"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+  background-color: rgba(27, 39, 63, 0.8);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Dynamic List Cards (for experiences, education, portfolio) */
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.list-item-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  position: relative;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+}
+.list-item-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: var(--shadow-md);
+}
+
+/* Card Controls */
+.card-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.35rem;
+  z-index: 10;
+}
+
+.card-control-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+.card-control-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-main);
+}
+.card-control-btn.delete:hover {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+/* Right Panel: Live CV Preview */
+.preview-panel {
+  flex: 1;
+  background-color: #1e293b;
+  overflow-y: auto;
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Template customizer floating widget */
+.preview-settings {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.preview-settings-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.template-selectors {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.template-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+.template-btn:hover {
+  background-color: var(--border-color);
+}
+.template-btn.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Color Palette Selectors */
+.color-selectors {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.color-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease;
+}
+.color-dot:hover {
+  transform: scale(1.15);
+}
+.color-dot.active {
+  border-color: var(--text-main);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   CV Paper Styles & Templates (Rendered inside preview panel)
+   ========================================================================== */
+.cv-paper {
+  background-color: white;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  font-family: var(--cv-font);
+  color: var(--cv-text);
+  line-height: 1.5;
+  font-size: 10.5pt;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* ATS Layout rules */
+.cv-paper p, .cv-paper li {
+  margin-bottom: 0.25rem;
+}
+
+.cv-header {
+  margin-bottom: 1.5rem;
+}
+
+.cv-header h1 {
+  font-size: 24pt;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--cv-primary);
+  margin-bottom: 0.25rem;
+}
+
+.cv-header .cv-title {
+  font-size: 13pt;
+  font-weight: 500;
+  color: var(--cv-text-light);
+  margin-bottom: 0.75rem;
+}
+
+.cv-contact-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  font-size: 9pt;
+  color: var(--cv-text-light);
+  border-bottom: 1.5px solid var(--cv-line);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.cv-contact-bar span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cv-contact-bar a {
+  color: var(--cv-text-light);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--cv-text-light);
+}
+.cv-contact-bar a:hover {
+  color: var(--cv-primary);
+  border-bottom-color: var(--cv-primary);
+}
+
+.cv-section {
+  margin-bottom: 1.5rem;
+}
+
+.cv-section-title {
+  font-size: 12pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cv-primary);
+  border-bottom: 1.5px solid var(--cv-primary);
+  padding-bottom: 2px;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.cv-summary {
+  text-align: justify;
+  font-size: 10pt;
+}
+
+/* Experiences / Educations Lists in CV */
+.cv-item {
+  margin-bottom: 1rem;
+}
+.cv-item:last-child {
+  margin-bottom: 0;
+}
+
+.cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 10.5pt;
+  color: #111827;
+}
+
+.cv-item-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5pt;
+  color: var(--cv-text-light);
+  margin-bottom: 0.35rem;
+  font-style: italic;
+}
+
+.cv-item-description {
+  font-size: 9.5pt;
+  white-space: pre-line;
+  text-align: justify;
+}
+
+/* Portfolio Links badge */
+.cv-portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 600px) {
+  .cv-portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cv-portfolio-item {
+  border: 1px solid var(--cv-line);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  font-size: 9.5pt;
+  transition: border-color 0.2s ease;
+  position: relative;
+}
+
+.cv-portfolio-item-title {
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cv-portfolio-link {
+  font-size: 8.5pt;
+  color: var(--cv-primary);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.cv-portfolio-link:hover {
+  text-decoration: underline;
+}
+
+.cv-portfolio-desc {
+  color: var(--cv-text);
+  margin: 0.35rem 0;
+}
+
+.cv-portfolio-tech {
+  font-size: 8.5pt;
+  font-family: 'Fira Code', monospace;
+  color: var(--cv-text-light);
+  background-color: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+/* Skills list for CV */
+.cv-skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cv-skill-line {
+  font-size: 9.5pt;
+}
+
+.cv-skill-category {
+  font-weight: 700;
+  color: #111827;
+  display: inline-block;
+  min-width: 150px;
+}
+
+.cv-languages-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: 9.5pt;
+}
+
+.cv-lang-item {
+  display: flex;
+  gap: 0.35rem;
+}
+.cv-lang-name {
+  font-weight: 700;
+}
+.cv-lang-level {
+  color: var(--cv-text-light);
+}
+
+/* ==========================================================================
+   CV TEMPLATE VARIATIONS
+   ========================================================================== */
+
+/* 1. CLASSIC ATS TEMPLATE (Serif style, ultra clean, centered header option) */
+.template-classic {
+  font-family: 'Times New Roman', Times, Georgia, serif;
+  font-size: 11pt;
+  color: #111;
+  padding: 1.5in; /* Standard margins */
+}
+.template-classic .cv-header {
+  text-align: center;
+  border-bottom: 2px double #111;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.template-classic .cv-header h1 {
+  font-family: 'Times New Roman', Times, Georgia, serif;
+  font-size: 26pt;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.template-classic .cv-header .cv-title {
+  font-family: 'Times New Roman', Times, Georgia, serif;
+  font-size: 13pt;
+  color: #333;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-top: 0.25rem;
+}
+.template-classic .cv-contact-bar {
+  justify-content: center;
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.template-classic .cv-section-title {
+  color: #000;
+  border-bottom: 1px solid #111;
+  font-size: 11.5pt;
+  font-weight: bold;
+}
+.template-classic .cv-item-header {
+  color: #000;
+}
+.template-classic .cv-portfolio-item {
+  border: none;
+  padding: 0;
+  border-bottom: 1px dashed #ddd;
+  border-radius: 0;
+  margin-bottom: 0.5rem;
+}
+.template-classic .cv-portfolio-tech {
+  background: none;
+  padding: 0;
+  color: #555;
+  font-size: 9pt;
+  font-family: inherit;
+  font-style: italic;
+}
+
+/* 2. EXECUTIVE TEMPLATE (Playfair Display, Elegant border, Right side Date alignment) */
+.template-executive {
+  font-family: 'Garamond', Georgia, serif;
+  font-size: 11pt;
+  color: #2b2b2b;
+}
+.template-executive .cv-header {
+  border-left: 4px solid var(--cv-primary);
+  padding-left: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+.template-executive .cv-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26pt;
+  font-weight: 700;
+  color: var(--cv-primary);
+}
+.template-executive .cv-header .cv-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 13pt;
+}
+.template-executive .cv-section-title {
+  font-family: 'Playfair Display', serif;
+  text-transform: none;
+  border-bottom: 1px solid var(--cv-primary);
+  font-size: 13pt;
+  letter-spacing: 0;
+}
+.template-executive .cv-item-header {
+  font-family: 'Garamond', Georgia, serif;
+  font-size: 11pt;
+}
+.template-executive .cv-contact-bar {
+  border-top: 1px solid var(--cv-line);
+  border-bottom: 1px solid var(--cv-line);
+  padding: 0.5rem 0;
+}
+
+/* 3. MODERN TEMPLATE (Outfit font, layout blocks) */
+.template-modern {
+  font-family: 'Inter', sans-serif;
+}
+.template-modern .cv-header h1 {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+.template-modern .cv-section-title {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.05em;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   Responsive UI Controls (Mobile View / Smaller Screens)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .editor-panel {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .editor-content {
+    overflow-y: visible;
+  }
+  .preview-panel {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: var(--bg-editor);
+  }
+  .cv-paper {
+    width: 100%;
+    min-height: auto;
+    padding: 1.5rem;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+  }
+  body {
+    overflow-y: auto;
+  }
+}
+
+/* ==========================================================================
+   Custom Confirm Modal Styling
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+.modal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 420px;
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  animation: scaleInModal 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--text-main);
+}
+
+.modal-header h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+
+.modal-body p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleInModal {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   PRINT MEDIA STYLES (Crucial for high-fidelity PDF output & ATS parsing)
+   ========================================================================== */
+@media print {
+  /* Hide all application chrome/UI elements */
+  header,
+  .editor-panel,
+  .preview-settings,
+  .card-controls,
+  .btn,
+  .icon-btn,
+  .editor-tabs {
+    display: none !important;
+  }
+
+  /* Reset main layouts to simple blocks */
+  body, html {
+    background-color: white !important;
+    color: black !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    font-size: 10pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .main-container,
+  .preview-panel {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+  }
+
+  /* Target the paper layout itself */
+  .cv-paper {
+    width: 210mm !important;
+    /* Clean, full height page or natural expansion */
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 auto !important;
+    padding: 15mm 20mm 15mm 20mm !important; /* Top, Right, Bottom, Left */
+    background: white !important;
+    color: #111 !important;
+    box-sizing: border-box !important;
+    page-break-after: always;
+  }
+
+  /* ATS Compatibility print-friendly elements */
+  a {
+    text-decoration: none !important;
+    color: #111 !important;
+  }
+
+  .cv-contact-bar span i {
+    display: inline !important;
+  }
+
+  /* Page break rules for ATS */
+  .cv-section {
+    page-break-inside: avoid;
+    margin-bottom: 1.2rem !important;
+  }
+
+  .cv-item {
+    page-break-inside: avoid;
+  }
+
+  /* Ensure background-colors are printed if needed */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
